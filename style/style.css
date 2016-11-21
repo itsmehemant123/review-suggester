@@ -1,0 +1,31 @@
+.input-group {
+  margin: 20px 0px;
+}
+
+td, th {
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+
+td:first-of-type {
+  height: 200px;
+  width: 250px;
+}
+
+.suggestion_item:hover {
+  background-color: rgb(81, 149, 238);
+  cursor: pointer;
+}
+
+.suggestion_item h3 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.suggestion_item h3 span {
+  vertical-align: middle;
+}
+
+.suggestion_item_percentage {
+  float: right;
+}
