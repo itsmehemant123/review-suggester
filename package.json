@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "amazon reviews suggestions",
   "main": "index.js",
-  "repository" :
-  {
-    "type" : "git",
-    "url" : "git@github.com:itsmehemant123/review-suggester.git"
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:itsmehemant123/review-suggester.git"
   },
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
@@ -25,6 +24,8 @@
     "axios": "^0.8.1",
     "babel-preset-stage-1": "^6.1.18",
     "lodash": "^3.10.1",
+    "nlp_compromise": "^6.5.3",
+    "pos": "^0.4.2",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",

@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import pos from 'pos';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchSuggestions, postCurrentReview, setRequestStatus, clearSuggestions } from '../actions/index';
+import { fetchSuggestions, fetchSuggestionsByWords, fetchSuggestionsByPOS, postCurrentReview, setRequestStatus, clearSuggestions, setIsPOSInUseStatus } from '../actions/index';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -24,14 +25,31 @@ class SearchBar extends Component {
       this.props.clearSuggestions();
       this.props.setRequestStatus(true);
       this.props.postCurrentReview(this.state.term);
-      this.props.fetchSuggestions(this.state.term);
+      this.props.fetchSuggestionsByWords(this.state.term);
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    // This is for setting the search bar with the updated query once the user clicks on one of the suggestions.
     if (nextProps.currentReview && nextProps.currentReview !== this.state.term) {
-      this.setState({ term: nextProps.currentReview });
+      const newTerm = (nextProps.currentReview[nextProps.currentReview.length - 1] == ' ')? nextProps.currentReview : nextProps.currentReview + ' ';
+      if(this.state.term.length != 0) {
+        this.setState({term: newTerm});
+      } else {
+        this.setState({ term: nextProps.currentReview });
+      }
       ReactDOM.findDOMNode(this.refs.reviewText).focus();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    //console.log('HIT PROPS:', prevProps);
+    //console.log('HIT STATE:', prevState);
+    if(prevProps.suggestions.hasData && prevProps.suggestions.data.length == 0 && !prevProps.posInUse) {
+      //console.log('HIT THE POS');
+      this.props.setRequestStatus(true);
+      this.props.setIsPOSInUseStatus(true);
+      this.props.fetchSuggestionsByPOS(this.state.term, []);
     }
   }
 
@@ -53,11 +71,11 @@ class SearchBar extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchSuggestions, postCurrentReview, setRequestStatus, clearSuggestions }, dispatch);
+  return bindActionCreators({ fetchSuggestions, fetchSuggestionsByWords, fetchSuggestionsByPOS, postCurrentReview, setRequestStatus, clearSuggestions, setIsPOSInUseStatus }, dispatch);
 }
 
-function mapStateToProps({ currentReview }) {
-  return { currentReview: currentReview };
+function mapStateToProps({ currentReview, suggestions, requestSent, posInUse }) {
+  return { currentReview: currentReview, suggestions: suggestions, requestSent: requestSent, posInUse: posInUse };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
