@@ -36,7 +36,7 @@ class SuggestionsList extends Component {
     // Display the probility or predicted helpfulness too in the suggestion
     var listItems = sList.data.map(obj => {
       var text = this.props.currentReview + " " + obj[0];
-      console.log('DA:', obj);
+      //console.log('DA:', obj);
       const percentageInt = (parseFloat(obj[2]).toFixed(4) * 100).toFixed(2);
       var colorOfTag = this.returnColorClassForPercentage(percentageInt);
       return (
@@ -46,12 +46,12 @@ class SuggestionsList extends Component {
 
     if(this.props.currentReview != "" && listItems == "" && this.props.requestSent && !this.props.posInUse) {
       listItems = (
-        <img src="/res/images/ellipsis.gif" height="35px" style={{marginLeft: '20px'}} />
+        <img src="/res/images/ellipsis.gif" height="35px" style={{marginLeft: '50%'}} />
       );
     } else if(this.props.currentReview != "" && listItems == "" && this.props.requestSent && this.props.posInUse) {
       listItems = (
         <div> Using POS
-            <img src="/res/images/ellipsis.gif" height="35px" style={{marginLeft: '20px'}} />
+            <img src="/res/images/ellipsis.gif" height="35px" style={{marginLeft: '45%'}} />
         </div>
       );
     } else {

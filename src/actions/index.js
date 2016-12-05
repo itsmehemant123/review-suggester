@@ -1,4 +1,5 @@
 import axios from 'axios';
+import pos from 'pos';
 
 const NEO4J_URL = "http://104.198.234.213:7474/db/data/cypher";
 
@@ -27,12 +28,13 @@ function buildWordCypherQuery(word) {
   }
   const query = matchQuery + apocQuery + " match (sentences1)<-[:HAS_SENTENCE]-()-[:HAS_PARAGRAPH]-(review:REVIEW) with words.word as word, count(words.word) as count, avg(review.helpfulnessMetric) as metric return word,count,metric order by metric DESC, count DESC";
 
-console.log('QUERY:', query);
+  //console.log('QUERY:', query);
 
   return query;
 }
 
-function buildPOSCypherQuery(word, tags) {
+function buildPOSCypherQuery(word) {
+  console.log('BUILD POS HIT');
   return "";
 }
 
@@ -86,9 +88,9 @@ export function fetchSuggestionsByWords(word) {
   }
 }
 
-export function fetchSuggestionsByPOS(word, tag) {
+export function fetchSuggestionsByPOS(word) {
   console.log('BY POS');
-  const request = axios(prepareRequestObj(buildPOSCypherQuery(word, tag)));
+  const request = axios(prepareRequestObj(buildPOSCypherQuery(word)));
 
   return {
     type: FETCH_SUGGESTIONS_POS,

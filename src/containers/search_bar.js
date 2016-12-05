@@ -45,11 +45,11 @@ class SearchBar extends Component {
   componentDidUpdate(prevProps, prevState) {
     //console.log('HIT PROPS:', prevProps);
     //console.log('HIT STATE:', prevState);
-    if(prevProps.suggestions.hasData && prevProps.suggestions.data.length == 0 && !prevProps.posInUse) {
+    if(prevProps.suggestions.hasData && prevProps.suggestions.data.length <= 2 && !prevProps.posInUse) {
       //console.log('HIT THE POS');
       this.props.setRequestStatus(true);
       this.props.setIsPOSInUseStatus(true);
-      this.props.fetchSuggestionsByPOS(this.state.term, []);
+      this.props.fetchSuggestionsByPOS(this.state.term);
     }
   }
 
